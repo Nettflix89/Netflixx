@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const crypto = require('crypto');
 require('dotenv').config();
+const config = require('./config');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -22,8 +23,8 @@ app.use((req, res, next) => {
 });
 
 // Telegram Bot Configuration
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || 'YOUR_BOT_TOKEN';
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || 'YOUR_CHAT_ID';
+const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN || config.telegram.botToken;
+const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID || config.telegram.chatId;
 
 // In-memory storage (in production, use a proper database)
 const users = new Map();
