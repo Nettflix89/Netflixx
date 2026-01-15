@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Netflix - Watch TV Shows Online, Watch Movies Online</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Netflix+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="#" class="logo">NETFLIX</a>
+                <ul class="nav-menu">
+                    <li><a href="#" class="nav-link">Home</a></li>
+                    <li><a href="#" class="nav-link">TV Shows</a></li>
+                    <li><a href="#" class="nav-link">Movies</a></li>
+                    <li><a href="#" class="nav-link">New & Popular</a></li>
+                    <li><a href="#" class="nav-link">My List</a></li>
+                </ul>
+            </div>
+            <div class="nav-right">
+                <div class="search-box">
+                    <input type="text" placeholder="Search" class="search-input">
+                    <button class="search-btn">🔍</button>
+                </div>
+                <div class="nav-menu-item">Kids</div>
+                <div class="nav-menu-item">DVD</div>
+                <div class="user-profile">
+                    <img src="https://via.placeholder.com/32x32?text=U" alt="User" class="user-avatar">
+                    <span class="user-name">User</span>
+                    <span class="dropdown-arrow">▼</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-background">
+            <img id="hero-image" src="https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/xJeLS5E2YvqJwJjdW2NjvqDcQqT.jpg" alt="Hero Background" class="hero-image">
+            <div class="hero-gradient"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title" id="hero-title">Stranger Things</h1>
+            <div class="hero-info">
+                <span class="match-percentage" id="hero-match">98% Match</span>
+                <span class="year" id="hero-year">2016</span>
+                <span class="rating" id="hero-rating">TV-MA</span>
+                <span class="duration" id="hero-duration">4 Seasons</span>
+                <span class="quality">HD</span>
+            </div>
+            <p class="hero-description" id="hero-description">
+                When a young boy disappears, his mother, a police chief and his friends must confront terrifying supernatural forces in order to get him back.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" onclick="playHeroMovie()">
+                    <span class="btn-icon">▶</span>
+                    Play
+                </button>
+                <button class="btn btn-secondary" onclick="showHeroDetails()">
+                    <span class="btn-icon">ℹ</span>
+                    More Info
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Content Sections -->
+    <main class="content">
+        <!-- Trending Now -->
+        <section class="content-section">
+            <h2 class="section-title">Trending Now</h2>
+            <div class="movie-row" id="trending-row">
+                <!-- Movies will be loaded dynamically -->
+            </div>
+        </section>
+
+        <!-- New Releases -->
+        <section class="content-section">
+            <h2 class="section-title">New Releases</h2>
+            <div class="movie-row" id="newreleases-row">
+                <!-- Movies will be loaded dynamically -->
+            </div>
+        </section>
+
+        <!-- Action Movies -->
+        <section class="content-section">
+            <h2 class="section-title">Action Movies</h2>
+            <div class="movie-row" id="action-row">
+                <!-- Movies will be loaded dynamically -->
+            </div>
+        </section>
+
+        <!-- Comedy -->
+        <section class="content-section">
+            <h2 class="section-title">Comedy</h2>
+            <div class="movie-row" id="comedy-row">
+                <!-- Movies will be loaded dynamically -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section">
+        <div class="pricing-container">
+            <h2 class="pricing-title">Choose Your Plan</h2>
+            <p class="pricing-subtitle">Watch anywhere. Cancel anytime.</p>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Mobile</h3>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">6.99</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Watch on 1 device at a time</li>
+                        <li>✓ Phone and tablet only</li>
+                        <li>✓ Standard definition (480p)</li>
+                        <li>✓ Download for offline viewing</li>
+                    </ul>
+                    <button class="pricing-btn" onclick="selectPlan('Mobile', 6.99)">Get Started</button>
+                </div>
+                
+                    <div class="pricing-card popular">
+                    <div class="popular-badge">Most Popular</div>
+                    <div class="pricing-header">
+                        <h3>Standard</h3>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">15.49</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Watch on 2 devices at a time</li>
+                        <li>✓ Phone, tablet, computer, and TV</li>
+                        <li>✓ Full HD (1080p)</li>
+                        <li>✓ Download for offline viewing</li>
+                        <li>✓ Add 1 extra member</li>
+                    </ul>
+                    <button class="pricing-btn" onclick="selectPlan('Standard', 15.49)">Get Started</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Premium</h3>
+                        <div class="price">
+                            <span class="currency">$</span>
+                            <span class="amount">22.99</span>
+                            <span class="period">/month</span>
+                        </div>
+                    </div>
+                    <ul class="pricing-features">
+                        <li>✓ Watch on 4 devices at a time</li>
+                        <li>✓ Phone, tablet, computer, and TV</li>
+                        <li>✓ Ultra HD (4K) and HDR</li>
+                        <li>✓ Download for offline viewing</li>
+                        <li>✓ Add 2 extra members</li>
+                        <li>✓ Netflix spatial audio</li>
+                    </ul>
+                    <button class="pricing-btn" onclick="selectPlan('Premium', 22.99)">Get Started</button>
+                </div>
+            </div>
+            
+            <div class="pricing-info">
+                <p>No hidden fees, equipment rentals, or installation appointments.</p>
+                <button class="compare-plans-btn">Compare all plans</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Press</a></li>
+                    <li><a href="#">Netflix Shop</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>View Netflix in</h4>
+                <ul>
+                    <li><a href="#">English</a></li>
+                    <li><a href="#">Spanish</a></li>
+                    <li><a href="#">French</a></li>
+                    <li><a href="#">German</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Account</a></li>
+                    <li><a href="#">Legal Notices</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Legal</h4>
+                <ul>
+                    <li><a href="#">Terms of Use</a></li>
+                    <li><a href="#">Privacy</a></li>
+                    <li href="#">Cookie Preferences</a></li>
+                    <li><a href="#">Corporate Information</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Netflix Clone. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="movies.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Load movies when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof loadMovies === 'function') {
+                loadMovies();
+            }
+        });
+    </script>
+</body>
+</html>

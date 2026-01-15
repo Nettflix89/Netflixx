@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Poster Test</title>
+    <style>
+        body {
+            background: #141414;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        .poster-item {
+            text-align: center;
+            margin: 20px;
+            border: 2px solid #333;
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .poster-item img {
+            width: 200px;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #555;
+        }
+        .poster-item h3 {
+            margin: 10px 0 5px;
+            font-size: 14px;
+        }
+        .status {
+            font-size: 12px;
+            margin-top: 5px;
+        }
+        .loaded { color: #4caf50; }
+        .error { color: #f44336; }
+    </style>
+</head>
+<body>
+    <h1>Simple Poster Test - Absolute Paths</h1>
+    
+    <div class="poster-item">
+        <h3>Stranger Things</h3>
+        <img src="http://localhost:8000/posters/stranger-things-real.jpg" alt="Stranger Things" 
+             onload="this.nextElementSibling.textContent='✓ Loaded'" 
+             onerror="this.nextElementSibling.textContent='✗ Failed'">
+        <div class="status">Loading...</div>
+    </div>
+    
+    <div class="poster-item">
+        <h3>Wednesday</h3>
+        <img src="http://localhost:8000/posters/wednesday-real.jpg" alt="Wednesday" 
+             onload="this.nextElementSibling.textContent='✓ Loaded'" 
+             onerror="this.nextElementSibling.textContent='✗ Failed'">
+        <div class="status">Loading...</div>
+    </div>
+    
+    <div class="poster-item">
+        <h3>The Night Agent</h3>
+        <img src="http://localhost:8000/posters/night-agent-real.jpg" alt="The Night Agent" 
+             onload="this.nextElementSibling.textContent='✓ Loaded'" 
+             onerror="this.nextElementSibling.textContent='✗ Failed'">
+        <div class="status">Loading...</div>
+    </div>
+    
+    <div class="poster-item">
+        <h3>Bridgerton</h3>
+        <img src="http://localhost:8000/posters/bridgerton-real.jpg" alt="Bridgerton" 
+             onload="this.nextElementSibling.textContent='✓ Loaded'" 
+             onerror="this.nextElementSibling.textContent='✗ Failed'">
+        <div class="status">Loading...</div>
+    </div>
+    
+    <div class="poster-item">
+        <h3>One Piece</h3>
+        <img src="http://localhost:8000/posters/one-piece-real.jpg" alt="One Piece" 
+             onload="this.nextElementSibling.textContent='✓ Loaded'" 
+             onerror="this.nextElementSibling.textContent='✗ Failed'">
+        <div class="status">Loading...</div>
+    </div>
+    
+    <div class="poster-item">
+        <h3>Dark Matter</h3>
+        <img src="http://localhost:8000/posters/dark-matter-real.jpg" alt="Dark Matter" 
+             onload="this.nextElementSibling.textContent='✓ Loaded'" 
+             onerror="this.nextElementSibling.textContent='✗ Failed'">
+        <div class="status">Loading...</div>
+    </div>
+    
+    <div class="poster-item">
+        <h3>Damsel</h3>
+        <img src="http://localhost:8000/posters/damsel-real.jpg" alt="Damsel" 
+             onload="this.nextElementSibling.textContent='✓ Loaded'" 
+             onerror="this.nextElementSibling.textContent='✗ Failed'">
+        <div class="status">Loading...</div>
+    </div>
+    
+    <div class="poster-item">
+        <h3>Extraction 2</h3>
+        <img src="http://localhost:8000/posters/extraction-2-real.jpg" alt="Extraction 2" 
+             onload="this.nextElementSibling.textContent='✓ Loaded'" 
+             onerror="this.nextElementSibling.textContent='✗ Failed'">
+        <div class="status">Loading...</div>
+    </div>
+    
+</body>
+</html>

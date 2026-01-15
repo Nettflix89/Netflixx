@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Poster Generator</title>
+    <style>
+        body {
+            background: #000;
+            color: white;
+            font-family: 'Netflix Sans', Arial, sans-serif;
+            padding: 20px;
+        }
+        .poster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .poster {
+            width: 300px;
+            height: 450px;
+            background: linear-gradient(135deg, #e50914, #b20710);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .poster::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(0,0,0,0.3));
+            pointer-events: none;
+        }
+        .poster-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            z-index: 1;
+        }
+        .poster-year {
+            font-size: 18px;
+            opacity: 0.8;
+            z-index: 1;
+        }
+        .poster-genre {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(229, 9, 20, 0.9);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .poster-rating {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .download-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #e50914;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .download-btn:hover {
+            background: #f40612;
+        }
+    </style>
+</head>
+<body>
+    <h1>Netflix Movie Posters</h1>
+    <div class="poster-grid" id="posterGrid"></div>
+
+    <script>
+        const movies = [
+            { title: "Dark Matter", year: "2024", genre: "Sci-Fi", rating: "TV-MA" },
+            { title: "The Gentlemen", year: "2024", genre: "Crime", rating: "TV-MA" },
+            { title: "3 Body Problem", year: "2024", genre: "Sci-Fi", rating: "TV-MA" },
+            { title: "Bridgerton", year: "2020", genre: "Romance", rating: "TV-MA" },
+            { title: "The Night Agent", year: "2023", genre: "Thriller", rating: "TV-MA" },
+            { title: "One Piece", year: "2023", genre: "Adventure", rating: "TV-14" },
+            { title: "Damsel", year: "2024", genre: "Fantasy", rating: "PG-13" },
+            { title: "Lift", year: "2024", genre: "Action", rating: "PG-13" },
+            { title: "Maestro", year: "2023", genre: "Drama", rating: "R" },
+            { title: "Rebel Moon", year: "2023", genre: "Sci-Fi", rating: "R" },
+            { title: "Leave the World Behind", year: "2023", genre: "Thriller", rating: "R" },
+            { title: "The Killer", year: "2023", genre: "Action", rating: "R" },
+            { title: "Extraction 2", year: "2023", genre: "Action", rating: "R" },
+            { title: "Heart of Stone", year: "2023", genre: "Action", rating: "PG-13" },
+            { title: "Spy Kids: Armageddon", year: "2023", genre: "Family", rating: "PG" },
+            { title: "The Mother", year: "2023", genre: "Action", rating: "R" },
+            { title: "Ghosted", year: "2023", genre: "Romantic Comedy", rating: "PG-13" },
+            { title: "The Union", year: "2024", genre: "Action", rating: "PG-13" },
+            { title: "Me Time", year: "2022", genre: "Comedy", rating: "R" },
+            { title: "You People", year: "2023", genre: "Romantic Comedy", rating: "R" },
+            { title: "Murder Mystery 2", year: "2023", genre: "Comedy", rating: "PG-13" },
+            { title: "Your Place or Mine", year: "2023", genre: "Romantic Comedy", rating: "PG-13" },
+            { title: "The Out-Laws", year: "2023", genre: "Comedy", rating: "R" },
+            { title: "Happiness for Beginners", year: "2023", genre: "Comedy", rating: "PG-13" }
+        ];
+
+        function generatePosters() {
+            const grid = document.getElementById('posterGrid');
+            
+            movies.forEach((movie, index) => {
+                const poster = document.createElement('div');
+                poster.className = 'poster';
+                poster.innerHTML = `
+                    <div class="poster-genre">${movie.genre}</div>
+                    <div class="poster-rating">${movie.rating}</div>
+                    <div class="poster-title">${movie.title}</div>
+                    <div class="poster-year">${movie.year}</div>
+                `;
+                
+                // Create canvas to convert to image
+                const canvas = document.createElement('canvas');
+                canvas.width = 300;
+                canvas.height = 450;
+                const ctx = canvas.getContext('2d');
+                
+                // Draw gradient background
+                const gradient = ctx.createLinearGradient(0, 0, 300, 450);
+                gradient.addColorStop(0, '#e50914');
+                gradient.addColorStop(1, '#b20710');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, 300, 450);
+                
+                // Add text
+                ctx.fillStyle = 'white';
+                ctx.font = 'bold 24px Arial';
+                ctx.textAlign = 'center';
+                ctx.fillText(movie.title, 150, 200);
+                
+                ctx.font = '18px Arial';
+                ctx.fillText(movie.year, 150, 230);
+                
+                // Convert to data URL
+                const dataUrl = canvas.toDataURL('image/png');
+                
+                // Update poster with generated image
+                poster.style.backgroundImage = `url(${dataUrl})`;
+                poster.style.backgroundSize = 'cover';
+                poster.innerHTML = `
+                    <div class="poster-genre">${movie.genre}</div>
+                    <div class="poster-rating">${movie.rating}</div>
+                `;
+                
+                grid.appendChild(poster);
+            });
+        }
+
+        generatePosters();
+    </script>
+</body>
+</html>

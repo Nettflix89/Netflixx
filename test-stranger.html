@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stranger Things Poster Test</title>
+    <style>
+        body {
+            background: #141414;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            text-align: center;
+        }
+        .poster-container {
+            max-width: 300px;
+            margin: 0 auto;
+            border: 2px solid #333;
+            padding: 20px;
+            border-radius: 8px;
+            background: #1a1a1a;
+        }
+        .poster-container img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 1px solid #555;
+        }
+        .poster-container h2 {
+            margin: 20px 0 10px;
+            color: #e50914;
+        }
+        .status {
+            margin-top: 15px;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .loaded { color: #4caf50; }
+        .error { color: #f44336; }
+    </style>
+</head>
+<body>
+    <h1>Stranger Things Poster Test</h1>
+    
+    <div class="poster-container">
+        <h2>Stranger Things</h2>
+        <img src="stranger-things-poster.jpg" alt="Stranger Things Poster" 
+             onload="document.getElementById('status').textContent='✅ SUCCESS: Stranger Things poster loaded!'" 
+             onerror="document.getElementById('status').textContent='❌ FAILED: Stranger Things poster not found'">
+        <div id="status" class="status">Loading Stranger Things poster...</div>
+    </div>
+    
+    <div style="margin-top: 30px; padding: 20px; background: #333; border-radius: 8px;">
+        <h3>Test Results:</h3>
+        <p>If you see the Stranger Things poster above - SUCCESS!</p>
+        <p>If you see an error or broken image - the file needs to be in the right location.</p>
+    </div>
+    
+</body>
+</html>
