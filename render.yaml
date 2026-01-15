@@ -1,0 +1,39 @@
+services:
+  - type: web
+    name: netflix-backend
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    healthCheckPath: /
+    
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: TELEGRAM_CHAT_ID
+        sync: false
+      - key: CLOUDFLARE_TURNSTILE_SITE_KEY
+        sync: false
+      - key: CLOUDFLARE_TURNSTILE_SECRET_KEY
+        sync: false
+
+    # Auto-deploy from main branch
+    autoDeploy: true
+    
+    # Health check configuration
+    healthCheck:
+      path: /
+      initialDelaySeconds: 30
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+
+# Database (if needed in future)
+databases:
+  - name: netflix-db
+    databaseName: netflix
+    user: netflix_user
