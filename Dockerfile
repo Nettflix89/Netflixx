@@ -1,6 +1,9 @@
 # Netflix Clone - Docker Configuration
 FROM node:18-alpine
 
+# Install Python and build tools
+RUN apk add --no-cache python3 make g++
+
 # Set working directory
 WORKDIR /app
 
