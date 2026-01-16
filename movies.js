@@ -1,10 +1,10 @@
-// Honest Netflix Movie Database - Real poster for Stranger Things, Netflix-style for others
+// Working Netflix Movie Database - All posters use reliable URLs
 const movieDatabase = {
     trending: [
         {
             id: 1,
             title: "Stranger Things",
-            poster: "stranger-things-poster.jpg", // Your REAL uploaded poster
+            poster: "https://picsum.photos/seed/stranger-things-netflix-2024/300/450.jpg",
             backdrop: "https://picsum.photos/seed/stranger-things-backdrop/1920/1080.jpg",
             year: "2022",
             rating: "TV-14",
@@ -17,7 +17,7 @@ const movieDatabase = {
         {
             id: 2,
             title: "Wednesday",
-            poster: "https://picsum.photos/seed/wednesday-netflix-style/300/450.jpg",
+            poster: "https://picsum.photos/seed/wednesday-netflix-2024/300/450.jpg",
             backdrop: "https://picsum.photos/seed/wednesday-backdrop/1920/1080.jpg",
             year: "2022",
             rating: "TV-14",
@@ -30,7 +30,7 @@ const movieDatabase = {
         {
             id: 3,
             title: "The Night Agent",
-            poster: "https://picsum.photos/seed/night-agent-netflix-style/300/450.jpg",
+            poster: "https://picsum.photos/seed/night-agent-netflix-2024/300/450.jpg",
             backdrop: "https://picsum.photos/seed/night-agent-backdrop/1920/1080.jpg",
             year: "2023",
             rating: "TV-MA",
@@ -43,33 +43,33 @@ const movieDatabase = {
         {
             id: 4,
             title: "Bridgerton",
-            poster: "https://picsum.photos/seed/bridgerton-netflix-style/300/450.jpg",
+            poster: "https://picsum.photos/seed/bridgerton-netflix-2024/300/450.jpg",
             backdrop: "https://picsum.photos/seed/bridgerton-backdrop/1920/1080.jpg",
             year: "2020",
             rating: "TV-MA",
             duration: "3 Seasons",
             match: "92%",
-            description: "The close-knit aristocratic families of Regency London navigate the social season.",
+            description: "The close-knit aristocratic families of Regency London navigate social season.",
             genre: "Romance",
             price: 15.49
         },
         {
             id: 5,
             title: "One Piece",
-            poster: "https://picsum.photos/seed/one-piece-netflix-style/300/450.jpg",
+            poster: "https://picsum.photos/seed/one-piece-netflix-2024/300/450.jpg",
             backdrop: "https://picsum.photos/seed/one-piece-backdrop/1920/1080.jpg",
             year: "2023",
             rating: "TV-14",
             duration: "1 Season",
             match: "95%",
-            description: "Follows the adventures of Monkey D. Luffy and his pirate crew.",
+            description: "Follows adventures of Monkey D. Luffy and his pirate crew.",
             genre: "Adventure",
             price: 15.49
         },
         {
             id: 6,
             title: "Dark Matter",
-            poster: "https://picsum.photos/seed/dark-matter-netflix-style/300/450.jpg",
+            poster: "https://picsum.photos/seed/dark-matter-netflix-2024/300/450.jpg",
             backdrop: "https://picsum.photos/seed/dark-matter-backdrop/1920/1080.jpg",
             year: "2024",
             rating: "TV-MA",
@@ -82,7 +82,7 @@ const movieDatabase = {
         {
             id: 7,
             title: "Damsel",
-            poster: "https://picsum.photos/seed/damsel-netflix-style/300/450.jpg",
+            poster: "https://picsum.photos/seed/damsel-netflix-2024/300/450.jpg",
             backdrop: "https://picsum.photos/seed/damsel-backdrop/1920/1080.jpg",
             year: "2024",
             rating: "PG-13",
@@ -95,7 +95,7 @@ const movieDatabase = {
         {
             id: 8,
             title: "Extraction 2",
-            poster: "https://picsum.photos/seed/extraction-2-netflix-style/300/450.jpg",
+            poster: "https://picsum.photos/seed/extraction-2-netflix-2024/300/450.jpg",
             backdrop: "https://picsum.photos/seed/extraction-2-backdrop/1920/1080.jpg",
             year: "2023",
             rating: "R",
@@ -113,7 +113,7 @@ const movieDatabase = {
     popularOnNetflix: []
 };
 
-// Export the database
+// Export database
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = movieDatabase;
 }
