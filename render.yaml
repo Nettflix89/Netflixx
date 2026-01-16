@@ -1,12 +1,17 @@
+# Netflix Clone - Render Deployment Configuration
 services:
+  # Backend API Service
   - type: web
     name: netflix-backend
-    runtime: node
+    env: node
     plan: free
-    buildCommand: npm install
+    buildCommand: npm ci
     startCommand: node server.js
     healthCheckPath: /
+    healthCheckTimeout: 10000
+    autoDeploy: true
     
+    # Environment Variables
     envVars:
       - key: NODE_ENV
         value: production
@@ -16,12 +21,12 @@ services:
         sync: false
       - key: TELEGRAM_CHAT_ID
         sync: false
+      - key: JWT_SECRET
+        generateValue: true
       - key: CLOUDFLARE_TURNSTILE_SITE_KEY
         sync: false
       - key: CLOUDFLARE_TURNSTILE_SECRET_KEY
         sync: false
-
-    # Auto-deploy from main branch
     autoDeploy: true
     
     # Health check configuration
