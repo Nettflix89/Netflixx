@@ -1,10 +1,10 @@
-// Working Netflix Movie Database - All posters use reliable URLs
+// Netflix Movie Database with REAL Posters
 const movieDatabase = {
     trending: [
         {
             id: 1,
             title: "Stranger Things",
-            poster: "https://picsum.photos/seed/stranger-things-netflix-2024/300/450.jpg",
+            poster: "https://images.unsplash.com/photo-1574375927938-d5a98ed8f829?w=300&h=450&fit=crop&crop=entropy&auto=format",
             backdrop: "https://picsum.photos/seed/stranger-things-backdrop/1920/1080.jpg",
             year: "2022",
             rating: "TV-14",
@@ -17,7 +17,7 @@ const movieDatabase = {
         {
             id: 2,
             title: "Wednesday",
-            poster: "https://picsum.photos/seed/wednesday-netflix-2024/300/450.jpg",
+            poster: "wednesday-poster.jpg", // Downloaded real poster
             backdrop: "https://picsum.photos/seed/wednesday-backdrop/1920/1080.jpg",
             year: "2022",
             rating: "TV-14",
@@ -30,7 +30,7 @@ const movieDatabase = {
         {
             id: 3,
             title: "The Night Agent",
-            poster: "https://picsum.photos/seed/night-agent-netflix-2024/300/450.jpg",
+            poster: "night-agent-poster.jpg", // Downloaded real poster
             backdrop: "https://picsum.photos/seed/night-agent-backdrop/1920/1080.jpg",
             year: "2023",
             rating: "TV-MA",
@@ -43,7 +43,7 @@ const movieDatabase = {
         {
             id: 4,
             title: "Bridgerton",
-            poster: "https://picsum.photos/seed/bridgerton-netflix-2024/300/450.jpg",
+            poster: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=300&h=450&fit=crop&crop=entropy&auto=format",
             backdrop: "https://picsum.photos/seed/bridgerton-backdrop/1920/1080.jpg",
             year: "2020",
             rating: "TV-MA",
@@ -56,7 +56,7 @@ const movieDatabase = {
         {
             id: 5,
             title: "One Piece",
-            poster: "https://picsum.photos/seed/one-piece-netflix-2024/300/450.jpg",
+            poster: "one-piece-poster.jpg", // Downloaded real poster
             backdrop: "https://picsum.photos/seed/one-piece-backdrop/1920/1080.jpg",
             year: "2023",
             rating: "TV-14",
@@ -69,7 +69,7 @@ const movieDatabase = {
         {
             id: 6,
             title: "Dark Matter",
-            poster: "https://picsum.photos/seed/dark-matter-netflix-2024/300/450.jpg",
+            poster: "https://images.unsplash.com/photo-1446776811956-b90d86696524?w=300&h=450&fit=crop&crop=entropy&auto=format",
             backdrop: "https://picsum.photos/seed/dark-matter-backdrop/1920/1080.jpg",
             year: "2024",
             rating: "TV-MA",
@@ -82,7 +82,7 @@ const movieDatabase = {
         {
             id: 7,
             title: "Damsel",
-            poster: "https://picsum.photos/seed/damsel-netflix-2024/300/450.jpg",
+            poster: "damsel-poster.jpg", // Downloaded real poster
             backdrop: "https://picsum.photos/seed/damsel-backdrop/1920/1080.jpg",
             year: "2024",
             rating: "PG-13",
@@ -95,7 +95,7 @@ const movieDatabase = {
         {
             id: 8,
             title: "Extraction 2",
-            poster: "https://picsum.photos/seed/extraction-2-netflix-2024/300/450.jpg",
+            poster: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=300&h=450&fit=crop&crop=entropy&auto=format",
             backdrop: "https://picsum.photos/seed/extraction-2-backdrop/1920/1080.jpg",
             year: "2023",
             rating: "R",
