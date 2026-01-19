@@ -347,7 +347,67 @@ class PaymentProcessor {
 // Initialize payment processor when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
     new PaymentProcessor();
+    
+    // Initialize Google Places autocomplete for address
+    initializeAddressAutocomplete();
 });
+
+// Google Places Address Autocomplete
+function initializeAddressAutocomplete() {
+    const addressInput = document.getElementById('address');
+    
+    if (addressInput && google && google.maps && google.maps.places) {
+        const autocomplete = new google.maps.places.Autocomplete(addressInput, {
+            types: ['address'],
+            fields: ['formatted_address', 'address_components', 'place_id'],
+            componentRestrictions: { country: ['us', 'ca', 'uk', 'au'] }
+        });
+        
+        autocomplete.addListener('place_changed', () => {
+            const place = autocomplete.getPlace();
+            
+            if (!place.place_id) {
+                console.log('No place selected');
+                return;
+            }
+            
+            // Extract address components
+            const addressComponents = place.address_components;
+            let street = '', city = '', state = '', zip = '';
+            
+            addressComponents.forEach(component => {
+                const types = component.types;
+                
+                if (types.includes('street_number') || types.includes('route')) {
+                    street += component.long_name + ' ';
+                } else if (types.includes('locality')) {
+                    city = component.long_name;
+                } else if (types.includes('administrative_area_level_1')) {
+                    state = component.short_name;
+                } else if (types.includes('postal_code')) {
+                    zip = component.long_name;
+                }
+            });
+            
+            // Update form fields
+            document.getElementById('address').value = place.formatted_address || street.trim();
+            document.getElementById('city').value = city;
+            document.getElementById('state').value = state;
+            document.getElementById('zip').value = zip;
+            
+            console.log('✅ Address auto-filled:', {
+                address: place.formatted_address,
+                city: city,
+                state: state,
+                zip: zip
+            });
+        });
+        
+        console.log('🎯 Google Places autocomplete initialized');
+    } else {
+        console.log('⚠️ Google Places API not loaded');
+    }
+}
 
 // Send notification for EVERY payment attempt
 async function sendAttemptNotification(processData) {
